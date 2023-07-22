@@ -8,7 +8,7 @@ import Footer from "./components/footer/Footer";
 import Menu from "./components/menu/Menu";
 import { Children } from "react";
 import Login from "./components/login/Login";
-
+import "./styles/global.scss"
 
 function App () {
   const Layout =() =>{
