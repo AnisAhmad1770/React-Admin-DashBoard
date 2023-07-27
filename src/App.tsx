@@ -1,65 +1,76 @@
-import Home from "./pages/home/home"
-import Products from "./pages/Products/Products"
-import Users from "./pages/users/Users"
-import Errorpage from "./pages/ErrorPage/Errorpage";
-import {createBrowserRouter,RouterProvider,Route,Outlet,} from "react-router-dom";
+import Home from "./pages/home/Home";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import Users from "./pages/users/Users";
+import Products from "./pages/products/Products";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import Menu from "./components/menu/Menu";
-import { Children } from "react";
-import Login from "./components/login/Login";
-import "./styles/global.scss"
+import Login from "./pages/login/Login";
+import "./styles/global.scss";
+import User from "./pages/user/User";
+import Product from "./pages/product/Product";
+import {
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 
-function App () {
-  const Layout =() =>{
-    return(
+
+const queryClient = new QueryClient();
+
+function App() {
+  const Layout = () => {
+    return (
       <div className="main">
-        <Navbar/>
+        <Navbar />
         <div className="container">
-          <div className="menu-container">
-            <Menu/>
+          <div className="menuContainer">
+            <Menu />
           </div>
-          <div className="content-container">
-            <Outlet/>
+          <div className="contentContainer">
+            <QueryClientProvider client={queryClient}>
+              <Outlet />
+            </QueryClientProvider>
           </div>
         </div>
-        <Footer/>
+        <Footer />
       </div>
-    )
-  }
+    );
+  };
 
   const router = createBrowserRouter([
     {
-      path:"/",
-      element:<Layout/>,
+      path: "/",
+      element: <Layout />,
       children: [
         {
           path: "/",
-          element:  <Home/>,
-          
+          element: <Home />,
         },
         {
-          path: "users",
-          element: <Users/>,
+          path: "/users",
+          element: <Users />,
         },
         {
-          path: "products",
-          element: <Products/>,
+          path: "/products",
+          element: <Products />,
         },
         {
-          path: "*",
-          element: <Errorpage/>,
+          path: "/users/:id",
+          element: <User />,
         },
-      ]
+        {
+          path: "/products/:id",
+          element: <Product />,
+        },
+      ],
     },
     {
-      path:"login",
-      element: <Login/>
+      path: "/login",
+      element: <Login />,
     },
   ]);
-  return (
-    <RouterProvider router={router} />
-  );
-} 
 
-export default App
+  return <RouterProvider router={router} />;
+}
+
+export default App;
